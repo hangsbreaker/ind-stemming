@@ -282,7 +282,7 @@ function suffix(kata) {
   return kata;
 }
 
-exports.stem = kalimat => {
+ function stem(kalimat){
   var str = "";
   var ark = kalimat
     .replace(/[^0-9a-zA-Z]/g, " ")
