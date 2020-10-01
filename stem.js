@@ -282,15 +282,18 @@ function suffix(kata) {
   return kata;
 }
 
- export.stem = kalimat => {
-  var str = "";
-  var ark = kalimat
-    .replace(/[^0-9a-zA-Z]/g, " ")
-    .toLowerCase()
-    .split(" ");
-  for (kata in ark) {
-    str = str + " " + dasar(ark[kata]);
+exports.stem = (kalimat = "") => {
+  if (kalimat != "") {
+    var str = "";
+    var ark = kalimat
+      .replace(/[^0-9a-zA-Z]/g, " ")
+      .toLowerCase()
+      .split(" ");
+    for (kata in ark) {
+      str = str + " " + dasar(ark[kata]);
+    }
+    return str.trim();
   }
-  return str.trim();
+  return;
 };
 
