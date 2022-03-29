@@ -244,7 +244,7 @@ function suffix($kata)
                             $kata = substr($kata, 0, strlen($kata) - 3);
                         }
                     }
-                } else {
+                } else if (strlen($kata) > 5) {
                     $kata = substr($kata, 0, strlen($kata) - 2);
                 }
             }
