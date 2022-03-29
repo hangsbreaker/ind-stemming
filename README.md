@@ -1,4 +1,4 @@
-# ind-stemming-js
+# ind-stemming
 Javascript Stemming Bahasa Indonesia
 
 # Usage for nodejs
