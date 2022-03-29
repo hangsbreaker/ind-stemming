@@ -1,5 +1,5 @@
 # ind-stemming
-Javascript Stemming Bahasa Indonesia
+Javascript, PHP, Python Stemming Bahasa Indonesia
 
 # Usage for nodejs
 const { stem } = require("./stem");<br>
