@@ -2,17 +2,13 @@
 // STEMMING ========================
 function dasar($kata)
 {
-    if (
-        (substr($kata, -3) == "kah" && strlen($kata) > 7) || (strlen($kata) > 5 && substr($kata, -3) == "lah") || substr($kata, -3) == "pun"
-    ) {
-        $kata = substr($kata, -3);
-    }
-    //langkah 2 - hapus possesive pronoun
     if (strlen($kata) > 4) {
         if (substr($kata, -2) == "ku" || substr($kata, -2) == "mu") {
             $kata = substr($kata, 0, strlen($kata) - 2);
         } else {
-            if (substr($kata, -5) == "annya") {
+            if (substr($kata, -6) == "kannya") {
+                $kata = substr($kata, 0, strlen($kata) - 3);
+            } else if (substr($kata, -5) == "annya" && strlen($kata) > 8) {
                 $kata = substr($kata, 0, strlen($kata) - 5);
             } else {
                 if (substr($kata, -3) == "nya") {
@@ -21,7 +17,7 @@ function dasar($kata)
             }
         }
     }
-    //langkah 3 hapus first order prefiks (awalan pertama)
+
     if (substr($kata, 0, 2) == "me") {
         if (substr($kata, 0, 3) == "mem") {
             if (
@@ -62,7 +58,8 @@ function dasar($kata)
                             if (
                                 (strlen(suffix(substr($kata, 4, strlen($kata)))) > 5 &&
                                     substr($kata, -1) != "t") ||
-                                substr($kata, -1) == "p"
+                                (substr($kata, -1) == "p" && substr($kata, 5, 1) == "c") ||
+                                substr($kata, 5, 1) == "m" || substr($kata, -3) == "lah"
                             ) {
                                 $kata = "k" . substr($kata, 4, strlen($kata));
                             } else {
@@ -133,10 +130,10 @@ function dasar($kata)
                                 $kata = substr($kata, 3, strlen($kata));
                             } else {
                                 if (substr($kata, 0, 2) == "ke") {
-                                    if (substr($kata, 2, 1) == "m") {
-                                        //$$kata = substr($$kata,3);
+                                    if (substr($kata, 2, 1) == "m" || substr($kata, 2, 1) == "l") {
+                                        $kata = $kata;
                                     } else {
-                                        if (substr($kata, 2, 1) != "n") {
+                                        if (substr($kata, 2, 1) != "n" && strlen($kata) > 5) {
                                             $kata = substr($kata, 2, strlen($kata));
                                         }
                                     }
@@ -148,7 +145,7 @@ function dasar($kata)
             }
         }
     }
-    //langkah 4 hapus second order prefiks (awalan kedua)
+
     if (substr($kata, 0, 2) == "be") {
         if (substr($kata, 2, 1) == "k") {
             $kata = substr($kata, 2, strlen($kata));
@@ -161,7 +158,8 @@ function dasar($kata)
                         substr($kata, 3, 3) == "sih" ||
                         substr($kata, 3, 3) == "ani" ||
                         substr($kata, 3, 4) == "ikan"
-                    ) { } else {
+                    ) {
+                    } else {
                         if (substr($kata, 3, 1) == "i") {
                             $kata = substr($kata, 2, strlen($kata));
                         } else {
@@ -206,7 +204,6 @@ function dasar($kata)
     }
 
     $kata = suffix($kata);
-    ////langkah 5 hapus kalau cuma 1 karakter
     if (strlen($kata) == 1) {
         $kata = "";
     }
@@ -215,9 +212,12 @@ function dasar($kata)
 
 function suffix($kata)
 {
-    ////langkah 5 hapus suffiks
     $prefix = array("kah", "lah", "pun", "me", "mem", "men", "meng", "meny", "peng", "pem", "pen", "peny", "di", "ter", "ke", "kem", "ken", "be", "bek", "bel", "ber", "per", "pel", "se");
     $str = str_replace($prefix, "", $kata);
+
+    if ((substr($kata, -3) == "kah" && strlen($kata) > 7) || (strlen($kata) > 5 && substr($kata, -3) == "lah") || substr($kata, -3) == "pun") {
+        $kata = substr($kata, -3);
+    }
 
     if (substr($kata, -1) == "i") {
         if (strlen($str) > 5) {
@@ -244,7 +244,7 @@ function suffix($kata)
                             $kata = substr($kata, 0, strlen($kata) - 3);
                         }
                     }
-                } else if (strlen($kata) > 5) {
+                } else {
                     $kata = substr($kata, 0, strlen($kata) - 2);
                 }
             }
@@ -259,9 +259,10 @@ function stemming($kalimat)
         $str = "";
         $ark = explode(" ", strtolower(str_replace('/[^0-9a-zA-Z]/g', " ", $kalimat)));
         foreach ($ark as $kata) {
+            $str = trim($str);
             $str = $str . " " . dasar($kata);
         }
         return trim($str);
     }
-    return;
+    return "";
 };
