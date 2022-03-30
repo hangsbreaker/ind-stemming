@@ -4,22 +4,18 @@ import re
 class Stemming():
 
     def dasar(self, kata):
-        # langkah 1 - hapus akhiran
-        if ((kata[len(kata)-3:] == "kah" and len(kata) > 7) or (len(kata) > 5 and kata[len(kata)-3:] == "lah") or kata[len(kata)-3:] == "pun"):
-            kata = kata[:len(kata)-3]
-
-        # langkah 2 - hapus possesive pronoun
         if (len(kata) > 4):
             if (kata[len(kata)-2:] == "ku" or kata[len(kata)-2:] == "mu"):
                 kata = kata[:len(kata)-2]
             else:
-                if (kata[len(kata)-5:] == "annya"):
+                if (kata[len(kata)-6:] == "kannya"):
+                    kata = kata[:len(kata)-3]
+                elif (kata[len(kata)-5:] == "annya") and len(kata) > 8:
                     kata = kata[:len(kata)-5]
                 else:
                     if (kata[len(kata)-3:] == "nya"):
                         kata = kata[:len(kata)-3]
 
-        # langkah 3 - hapus first order prefiks (awalan pertama)
         if (kata[:2] == "me"):
             if (kata[:3] == "mem"):
                 if (kata[3:4] == "a" or kata[3:4] == "i" or kata[3:4] == "e" or kata[3:4] == "u" or kata[3:4] == "o"):
@@ -54,7 +50,8 @@ class Stemming():
                                 if (
                                     (len(self.suffix(kata[4:len(kata)])) > 5 and
                                      kata[len(kata)-1:] != "t") or
-                                    kata[len(kata)-1:] == "p"
+                                    (kata[len(kata)-1:] == "p" and kata[5:6] == "c") or
+                                    kata[len(kata)-3:] == "lah"
                                 ):
                                     kata = "k" + kata[4:len(kata)]
                                 else:
@@ -115,14 +112,12 @@ class Stemming():
                                     kata = kata[3:len(kata)]
                                 else:
                                     if (kata[:2] == "ke"):
-                                        if (kata[2:3] == "m"):
-                                            # kata = kata[3:]
+                                        if (kata[2:3] == "m" or kata[2:3] == "l"):
                                             kata = kata
                                         else:
-                                            if (kata[2:3] != "n"):
+                                            if (kata[2:3] != "n" and len(kata) > 5):
                                                 kata = kata[2: len(kata)]
 
-        # langkah 4 - hapus second order prefiks (awalan kedua)
         if (kata[:2] == "be"):
             if (kata[2:3] == "k"):
                 kata = kata[2: len(kata)]
@@ -169,7 +164,6 @@ class Stemming():
                                         kata = kata[2: len(kata)]
 
         kata = self.suffix(kata)
-        # langkah 5 - hapus kalau cuma 1 karakter
         if (len(kata) == 1):
             kata = ""
 
@@ -180,6 +174,9 @@ class Stemming():
 
         regex = re.compile(prefix)
         str = regex.sub('', kata.lower()).split(" ")
+
+        if ((kata[len(kata)-3:] == "kah" and len(kata) > 7) or (len(kata) > 5 and kata[len(kata)-3:] == "lah") or kata[len(kata)-3:] == "pun"):
+            kata = kata[:len(kata)-3]
 
         if (kata[len(kata)-1:] == "i"):
             if (len(str) > 5):
