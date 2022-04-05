@@ -182,10 +182,8 @@ class Stemming():
 
         if (kata[len(kata)-1:] == "i"):
             if (len(str) > 5):
-                if (kata[(len(kata) - 3):(len(kata) - 1)] != "rt"):
+                if (kata[(len(kata) - 3):(len(kata) - 1)] != "rt") and (len(kata) > 5) and (("l" not in kata) and ("m" not in kata) and ("n" not in kata)):
                     kata = kata[:len(kata) - 1]
-            elif (len(kata) > 5) and (("l" not in kata) and ("m" not in kata) and ("n" not in kata)):
-                kata = kata[:len(kata) - 1]
         else:
             if (kata[len(kata)-2:] == "an"):
                 if (kata[len(kata)-3:] != "ian"):
