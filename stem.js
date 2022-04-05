@@ -264,7 +264,7 @@ function suffix(kata) {
         } else if (
           (kata.length > 5 &&
             kata.substr(0, 4) != "deng" &&
-            !kata.includes("u")) ||
+            !kata.includes("u")) &&
           kata.substr(-4) != "iman"
         ) {
           kata = kata.substr(0, kata.length - 2);
