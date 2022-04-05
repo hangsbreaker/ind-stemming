@@ -59,7 +59,8 @@ function dasar($kata)
                                 (strlen(suffix(substr($kata, 4, strlen($kata)))) > 5 &&
                                     substr($kata, -1) != "t") ||
                                 (substr($kata, -1) == "p" && substr($kata, 5, 1) == "c") ||
-                                substr($kata, 5, 1) == "m" || substr($kata, -3) == "lah"
+                                (substr($kata, 4, 1) == "e" && (substr($kata, 5, 1) == "m" || substr($kata, 5, 1) == "j" || substr($kata, 6, 1) == "j")) ||
+                                substr($kata, -3) == "lah"
                             ) {
                                 $kata = "k" . substr($kata, 4, strlen($kata));
                             } else {
