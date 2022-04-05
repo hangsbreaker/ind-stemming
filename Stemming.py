@@ -4,6 +4,7 @@ import re
 class Stemming():
 
     def dasar(self, kata):
+        vocal = ["a","i","u","e","o"]
         if (len(kata) > 4):
             if (kata[len(kata)-2:] == "ku" or kata[len(kata)-2:] == "mu"):
                 kata = kata[:len(kata)-2]
@@ -35,10 +36,11 @@ class Stemming():
 
             else:
                 if (kata[:3] == "men"):
-                    if (kata[3:4] == "e" or kata[3:4] == "a"):
-                        kata = "t" + kata[3:len(kata)]
-                    elif (kata[3:4] == "i"):
-                        kata = "n" + kata[3:len(kata)]
+                    if (kata[3:4] in vocal):
+                        if ((kata[3:4] == "i" and kata[6:7] == "h") or kata[4:5] == "i") or (kata[4:5] in vocal):
+                            kata = "n" + kata[3:len(kata)]
+                        else:
+                            kata = "t" + kata[3:len(kata)]
                     else:
                         if (kata[:4] == "meng"):
                             if (
@@ -91,7 +93,9 @@ class Stemming():
                         kata = "m" + kata[3:len(kata)]
 
                 else:
-                    if (kata[:3] == "pen"):
+                    if (kata[:4] == "peny"):
+                        kata = "s" + kata[4:len(kata)]
+                    elif (kata[:3] == "pen"):
                         if (
                             kata[3:4] == "a" or
                             kata[3:4] == "i" or
@@ -103,21 +107,18 @@ class Stemming():
                         else:
                             kata = kata[3:len(kata)]
                     else:
-                        if (kata[:4] == "peny"):
-                            kata = "s" + kata[4:len(kata)]
+                        if (kata[:2] == "di"):
+                            kata = kata[2: len(kata)]
                         else:
-                            if (kata[:2] == "di"):
-                                kata = kata[2: len(kata)]
+                            if (kata[:3] == "ter"):
+                                kata = kata[3:len(kata)]
                             else:
-                                if (kata[:3] == "ter"):
-                                    kata = kata[3:len(kata)]
-                                else:
-                                    if (kata[:2] == "ke"):
-                                        if (kata[2:3] == "m" or kata[2:3] == "l"):
-                                            kata = kata
-                                        else:
-                                            if (kata[2:3] != "n" and len(kata) > 5):
-                                                kata = kata[2: len(kata)]
+                                if (kata[:2] == "ke"):
+                                    if (kata[2:3] == "m" or kata[2:3] == "l"):
+                                        kata = kata
+                                    else:
+                                        if (kata[2:3] != "n" and len(kata) > 5):
+                                            kata = kata[2: len(kata)]
 
         if (kata[:2] == "be"):
             if (kata[2:3] == "k"):
@@ -181,8 +182,10 @@ class Stemming():
 
         if (kata[len(kata)-1:] == "i"):
             if (len(str) > 5):
-                if (kata[(len(kata) - 3): (len(kata) - 1)] != "rt"):
+                if (kata[(len(kata) - 3):(len(kata) - 1)] != "rt"):
                     kata = kata[:len(kata) - 1]
+            elif (len(kata) > 5) and (("l" not in kata) and ("m" not in kata) and ("n" not in kata)):
+                kata = kata[:len(kata) - 1]
         else:
             if (kata[len(kata)-2:] == "an"):
                 if (kata[len(kata)-3:] != "ian"):
@@ -198,7 +201,7 @@ class Stemming():
                         else:
                             if (len(kata) > 5):
                                 kata = kata[:len(kata)-3]
-                    elif (len(kata) > 5):
+                    elif (len(kata) > 5) and kata[:4] != "deng" and ("u" not in kata) or kata[len(kata)-4:] == "iman":
                         kata = kata[:len(kata)-2]
 
         return kata
