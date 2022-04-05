@@ -51,7 +51,7 @@ class Stemming():
                                     (len(self.suffix(kata[4:len(kata)])) > 5 and
                                      kata[len(kata)-1:] != "t") or
                                     (kata[len(kata)-1:] == "p" and kata[5:6] == "c") or
-                                    kata[5:6] == "j" or kata[6:7] == "j" or
+                                    (kata[4:5] == "e" and (kata[5:6] == "m" or kata[5:6] == "j" or kata[6:7] == "j")) or
                                     kata[len(kata)-3:] == "lah"
                                 ):
                                     kata = "k" + kata[4:len(kata)]
