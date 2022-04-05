@@ -199,7 +199,7 @@ class Stemming():
                         else:
                             if (len(kata) > 5):
                                 kata = kata[:len(kata)-3]
-                    elif (len(kata) > 5) and kata[:4] != "deng" and ("u" not in kata) or kata[len(kata)-4:] == "iman":
+                    elif (len(kata) > 5) and kata[:4] != "deng" and ("u" not in kata) or kata[len(kata)-4:] != "iman":
                         kata = kata[:len(kata)-2]
 
         return kata

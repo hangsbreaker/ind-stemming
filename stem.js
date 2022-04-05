@@ -263,9 +263,9 @@ function suffix(kata) {
           }
         } else if (
           (kata.length > 5 &&
-            kata.substr(-4) != "deng" &&
+            kata.substr(0, 4) != "deng" &&
             !kata.includes("u")) ||
-          kata.substr(-4) == "iman"
+          kata.substr(-4) != "iman"
         ) {
           kata = kata.substr(0, kata.length - 2);
         }
@@ -275,7 +275,7 @@ function suffix(kata) {
   return kata;
 }
 
-exports.stem = (kalimat = "") => {
+function stem(kalimat = "") {
   if (kalimat != "") {
     var str = "";
     var ark = kalimat
@@ -289,5 +289,4 @@ exports.stem = (kalimat = "") => {
     return str.trim();
   }
   return "";
-};
-
+}

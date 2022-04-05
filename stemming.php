@@ -246,7 +246,12 @@ function suffix($kata)
                             $kata = substr($kata, 0, strlen($kata) - 3);
                         }
                     }
-                } else {
+                } else if (
+                    strlen($kata) > 5 &&
+                    substr($kata, 0, 4) != "deng" &&
+                    strpos($kata, "u") == false ||
+                    substr($kata, -4) != "iman"
+                ) {
                     $kata = substr($kata, 0, strlen($kata) - 2);
                 }
             }
