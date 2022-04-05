@@ -2,6 +2,7 @@
 // STEMMING ========================
 function dasar($kata)
 {
+    $vocal = array("a", "i", "u", "e", "o");
     if (strlen($kata) > 4) {
         if (substr($kata, -2) == "ku" || substr($kata, -2) == "mu") {
             $kata = substr($kata, 0, strlen($kata) - 2);
@@ -43,10 +44,12 @@ function dasar($kata)
             }
         } else {
             if (substr($kata, 0, 3) == "men") {
-                if (substr($kata, 3, 1) == "e" || substr($kata, 3, 1) == "a") {
-                    $kata = "t" . substr($kata, 3, strlen($kata));
-                } else if (substr($kata, 3, 1) == "i") {
-                    $kata = "n" . substr($kata, 3, strlen($kata));
+                if (in_array(substr($kata, 3, 1))) {
+                    if ((substr($kata, 3, 1) == "i" && substr($kata, 6, 1) == "h") && substr($kata, 4, 1) == "i" || in_array(substr($kata, 4, 1))) {
+                        $kata = "n" . substr($kata, 3, strlen($kata));
+                    } else {
+                        $kata = "t" . substr($kata, 3, strlen($kata));
+                    }
                 } else {
                     if (substr($kata, 0, 4) == "meng") {
                         if (
@@ -108,7 +111,9 @@ function dasar($kata)
                     $kata = "m" . substr($kata, 3, strlen($kata));
                 }
             } else {
-                if (substr($kata, 0, 3) == "pen") {
+                if (substr($kata, 0, 4) == "peny") {
+                    $kata = "s" . substr($kata, 4, strlen($kata));
+                } else if (substr($kata, 0, 3) == "pen") {
                     if (
                         substr($kata, 3, 1) == "a" ||
                         substr($kata, 3, 1) == "i" ||
@@ -121,22 +126,18 @@ function dasar($kata)
                         $kata = substr($kata, 3, strlen($kata));
                     }
                 } else {
-                    if (substr($kata, 0, 4) == "peny") {
-                        $kata = "s" . substr($kata, 4, strlen($kata));
+                    if (substr($kata, 0, 2) == "di") {
+                        $kata = substr($kata, 2, strlen($kata));
                     } else {
-                        if (substr($kata, 0, 2) == "di") {
-                            $kata = substr($kata, 2, strlen($kata));
+                        if (substr($kata, 0, 3) == "ter") {
+                            $kata = substr($kata, 3, strlen($kata));
                         } else {
-                            if (substr($kata, 0, 3) == "ter") {
-                                $kata = substr($kata, 3, strlen($kata));
-                            } else {
-                                if (substr($kata, 0, 2) == "ke") {
-                                    if (substr($kata, 2, 1) == "m" || substr($kata, 2, 1) == "l") {
-                                        $kata = $kata;
-                                    } else {
-                                        if (substr($kata, 2, 1) != "n" && strlen($kata) > 5) {
-                                            $kata = substr($kata, 2, strlen($kata));
-                                        }
+                            if (substr($kata, 0, 2) == "ke") {
+                                if (substr($kata, 2, 1) == "m" || substr($kata, 2, 1) == "l") {
+                                    $kata = $kata;
+                                } else {
+                                    if (substr($kata, 2, 1) != "n" && strlen($kata) > 5) {
+                                        $kata = substr($kata, 2, strlen($kata));
                                     }
                                 }
                             }
@@ -222,7 +223,7 @@ function suffix($kata)
 
     if (substr($kata, -1) == "i") {
         if (strlen($str) > 5) {
-            if (substr($kata, strlen($kata) - 3, 2) != "rt") {
+            if (substr($kata, strlen($kata) - 3, 2) != "rt" && strpos($kata, "l") == false && strpos($kata, "m") == false && strpos($kata, "n") == false) {
                 $kata = substr($kata, 0, strlen($kata) - 1);
             }
         }
